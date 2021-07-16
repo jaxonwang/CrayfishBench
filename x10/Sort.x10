@@ -4,10 +4,6 @@ import x10.io.Console;
 
 public class Sort {
 
-    static val DIM=2;
-    static val CLUSTERS=4;
-    static val POINTS=2000;
-    static val ITERATIONS=50;
     static val UPPER_LIMIT=4294967295;
 
     public static def main (args: Rail[String]) {
@@ -24,7 +20,7 @@ public class Sort {
             numbers(i) = new ArrayList[Long]();
         }
 
-        val first_file = new File(data_dir + "/data_sort_test");
+        val first_file = new File(data_dir + "/data_sort_0");
 
         for (line in first_file.lines()) {
             val num = Long.parse(line);
@@ -43,14 +39,11 @@ public class Sort {
 
         Console.OUT.println("distribute done");
 
-        for (d in world) {
-            finish{
+        finish{
+            for (d in world) {
                 at (d) async {
                     local_numbers().sort();
-                    for (i in local_numbers()) {
-                        Console.OUT.println(i);
-                        break;
-                    }
+                    Console.OUT.println(local_numbers()(0));
                 }
             }
         }
@@ -60,7 +53,6 @@ public class Sort {
     }
 
     static def get_partition (value: Long, chunk_size: Long) : Long {
-        val ret = value / chunk_size;
-        return ret;
+        return value / chunk_size;
     }
 }
