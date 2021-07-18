@@ -53,7 +53,9 @@ public class Fib {
   public static def main(args:Rail[String]) {
     val n = (args.size > 0) ? Long.parse(args(0)) : 10;
     Console.OUT.println("Computing fib("+n+")");
-    val f = fib(n);
-    Console.OUT.println("fib("+n+") = "+f);
+//    for (i in (0..99)){
+	val f = fib(n);
+	Console.OUT.println("fib("+n+") = "+f);
+//	}
   }
 }

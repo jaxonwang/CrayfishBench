@@ -25,20 +25,22 @@ async fn update_numbers(nums: Vec<usize>, ptr: PlaceLocalWeak<Mutex<Vec<usize>>>
 pub async fn main(args: Vec<String>) {
     let local_numbers = PlaceLocal::new(Mutex::new(Vec::<usize>::default()));
 
-    collective::barrier().await;
-
-    let data_dir = std::path::PathBuf::from(&args[1]);
+    let global_input_files = &args[1..];
+    let local_id = place::here() as usize;
     let world_size = place::world_size();
+
+    let start_input = global_input_files.len() / world_size * local_id;
+    let end = global_input_files.len() / world_size * (local_id + 1);
+    let my_inputs = &global_input_files[start_input..end];
+    info!("inputs {:?}", my_inputs);
+
     let chunk_size = (UPPER_LIMIT + 1) / world_size;
 
-    let mut numbers = vec![];
-    for _ in 0..world_size {
-        numbers.push(Vec::<usize>::default());
-    }
-
-    if place::here() == 0 {
-        let first_file = std::fs::File::open(data_dir.join("data_sort_0")).unwrap();
-        let bf = BufReader::new(first_file);
+    collective::barrier().await;
+    for file_name in my_inputs.iter() {
+        let mut numbers = vec![vec![];world_size];
+        let input_file = std::fs::File::open(file_name).unwrap();
+        let bf = BufReader::new(input_file);
         for line in bf.lines() {
             let num = line.unwrap().parse::<usize>().unwrap();
             numbers[get_partition(num, chunk_size)].push(num);
@@ -57,7 +59,7 @@ pub async fn main(args: Vec<String>) {
 
     info!("distributed done");
     let mut handle = local_numbers.lock().unwrap();
-    handle.sort_unstable();
+    handle.sort();
     println!("{}", handle[0]);
 
     info!("sort done");

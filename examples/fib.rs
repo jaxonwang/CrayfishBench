@@ -28,9 +28,11 @@ async fn main(args: Vec<String>){
         10usize
     };
     if place::here() == 0 {
-        crayfish::finish!{
-            let f = at!(place::here(), fib(n)).await;
-            println!("fib({}) = {}", n, f);
-        };
+        for _ in 0..100{
+            crayfish::finish!{
+                let f = at!(place::here(), fib(n)).await;
+                println!("fib({}) = {}", n, f);
+            };
+        }
     }
 }

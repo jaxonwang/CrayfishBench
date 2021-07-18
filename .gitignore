@@ -15,3 +15,13 @@ Cargo.lock
 /target
 
 /data_gen/data
+*.swp
+
+core.*
+./*.sh.* // output
+
+x10/fib
+x10/sort
+x10/*.h
+x10/*.cc
+x10/*.sh.*
