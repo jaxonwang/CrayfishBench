@@ -19,14 +19,15 @@ for i in $(seq 0 `expr $2 - 1`); do echo ./data_gen/data/data_sort_$i ; done | x
 
 }
 
+# weak 
+run_sort 4 4
+run_sort 8 8
+run_sort 16 16
+run_sort 32 32
+
 # strong
 run_sort 32 32
 run_sort 16 32
 run_sort 8 32
 run_sort 4 32
 
-# weak 
-run_sort 4 4
-run_sort 8 8
-run_sort 16 16
-run_sort 32 32

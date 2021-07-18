@@ -29,3 +29,15 @@ run_sort 4 4
 run_sort 8 8
 run_sort 16 16
 run_sort 32 32
+
+# # strong
+# run_sort 32 64
+# run_sort 16 64
+# run_sort 8 64
+# run_sort 4 64
+#
+# # weak 
+# run_sort 4 8
+# run_sort 8 16
+# run_sort 16 32
+# run_sort 32 64

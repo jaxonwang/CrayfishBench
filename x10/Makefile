@@ -1,4 +1,4 @@
-OPT_LEVEL=-O5 -NO_CHECKS
+OPT_LEVEL=-O5 -NO_CHECKS -post icc
 
 all: sort fib
 
